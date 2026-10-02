@@ -2144,3 +2144,99 @@ img {
     padding: 20px;
   }
 }
+
+/* =====================================================================
+   NEXT PROJECT CARD WITH + ICON
+   ===================================================================== */
+.next-project-card {
+  border: 2px dashed rgba(226, 99, 71, 0.45) !important;
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-tertiary)) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 380px;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.next-project-card:hover {
+  border-color: var(--accent) !important;
+  box-shadow: var(--shadow-xl), 0 0 32px rgba(226, 99, 71, 0.18) !important;
+  transform: translateY(-4px);
+}
+
+.next-project-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 24px;
+  width: 100%;
+  text-align: center;
+}
+
+.plus-icon-circle {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  position: relative;
+  transition: all var(--transition-normal);
+  box-shadow: 0 4px 18px rgba(226, 99, 71, 0.25);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.plus-icon-circle::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border-radius: 50%;
+  border: 2px dashed rgba(226, 99, 71, 0.4);
+  animation: rotatePlusRing 14s linear infinite;
+}
+
+@keyframes rotatePlusRing {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.next-project-card:hover .plus-icon-circle {
+  transform: scale(1.1) rotate(90deg);
+  background: var(--accent);
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(226, 99, 71, 0.45);
+}
+
+/* Add Tab in Power BI Dashboard Mockup */
+.dash-tab-add-btn {
+  background: rgba(16, 185, 129, 0.12) !important;
+  color: #10B981 !important;
+  font-weight: 700 !important;
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.dash-tab-add-btn:hover {
+  background: #10B981 !important;
+  color: #FFFFFF !important;
+  transform: scale(1.06);
+}
+
+.plus-tab-icon {
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1;
+}
+

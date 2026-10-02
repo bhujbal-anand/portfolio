@@ -211,6 +211,15 @@ function initDashboardTabs() {
 
   tabButtons.forEach(button => {
     button.addEventListener('click', () => {
+      if (button.id === 'dash-tab-add-btn') {
+        showToast('Next dashboard view in progress! Propose metrics below.');
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+        return;
+      }
+
       const targetTab = button.getAttribute('data-tab');
 
       // Update button state
