@@ -2240,3 +2240,47 @@ img {
   line-height: 1;
 }
 
+/* =====================================================================
+   LINKEDIN INTEGRATION STYLES
+   ===================================================================== */
+.nav-social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: #0A66C2;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.nav-social-btn:hover {
+  background: rgba(10, 102, 194, 0.12);
+  border-color: #0A66C2;
+  transform: translateY(-2px);
+  color: #0A66C2;
+}
+
+.btn-linkedin {
+  color: var(--text-primary);
+  border-color: rgba(10, 102, 194, 0.25);
+  background: var(--bg-card);
+  transition: all var(--transition-fast);
+}
+
+.btn-linkedin:hover {
+  border-color: #0A66C2;
+  color: #0A66C2;
+  background: rgba(10, 102, 194, 0.08);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-linkedin svg {
+  flex-shrink: 0;
+}
+
+
