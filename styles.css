@@ -2283,4 +2283,37 @@ img {
   flex-shrink: 0;
 }
 
+.btn-github {
+  color: var(--text-primary);
+  border-color: var(--border-card);
+  background: var(--bg-card);
+  transition: all var(--transition-fast);
+}
+
+.btn-github:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(226, 99, 71, 0.08);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-github svg {
+  flex-shrink: 0;
+}
+
+.nav-github-btn:hover {
+  background: rgba(226, 99, 71, 0.12) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+}
+
+.nav-resume-btn:hover {
+  background: rgba(226, 99, 71, 0.12) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+}
+
+
+
 

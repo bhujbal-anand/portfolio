@@ -1,6 +1,6 @@
 # Anand Bhujbal — Data Analyst Portfolio Website
 
-A personal portfolio website for **Anand Bhujbal**, Data Analyst at Greateway Software Pvt. Ltd. (Pune, Maharashtra), showcasing real-world projects, executive Power BI dashboards, MySQL relational schemas, and advanced analytical queries.
+A personal portfolio website for **Anand Bhujbal**, Data Analyst based in Pune, Maharashtra, showcasing real-world projects, executive Power BI dashboards, MySQL relational schemas, and advanced analytical queries.
 
 ![Portfolio Preview](assets/dashboards/sales-overview.png)
 
@@ -22,7 +22,8 @@ A personal portfolio website for **Anand Bhujbal**, Data Analyst at Greateway So
 - **Frontend**: HTML5, Vanilla CSS3 (Custom Design Tokens, Flexbox, CSS Grid), Vanilla JavaScript (ES6+, IntersectionObserver, ScrollSpy).
 - **Data Analytics & BI**: Microsoft Power BI Desktop, DAX KPIs, Advanced Microsoft Excel (Pivot tables, VLOOKUP, Power Query).
 - **Databases & SQL**: MySQL 8.0, Relational Schema Architecture, Indexing, Normalization, Window Functions (`RANK`, `ROW_NUMBER`, `LAG`), CTEs, Aggregations.
-- **Programming & Analysis**: Python (Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn).
+- **Programming & Analysis**: Python (Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn), Streamlit, Plotly Express.
+- **GenAI & Local LLMs**: Meta LLaMA 3.2, Ollama local inference API, Automated EDA profiling.
 
 ---
 
@@ -34,6 +35,7 @@ Portfolio/
 │   ├── anand-photo.jpg                 # Portrait photo
 │   ├── Anand_Bhujbal_Resume.pdf        # Verified PDF resume for download
 │   └── dashboards/
+│       ├── genai-data-analyst.png      # GenAI Automated Data Analyst & EDA Studio
 │       ├── sales-overview.png          # Real Estate Sales Overview
 │       ├── city-payment-analysis.png   # City & Payment Analysis (₹28B)
 │       ├── buyer-analysis.png          # Buyer & Loan Distribution
