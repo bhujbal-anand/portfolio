@@ -86,16 +86,19 @@
           </svg>
         </a>
 
-        <!-- Updated Resume Link -->
-        <a href="assets/Anand_Bhujbal_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-social-btn nav-resume-btn" title="View Updated Resume (PDF)" aria-label="Anand Bhujbal Updated Resume">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-        </a>
+        <!-- Updated Resume Link with Plus (+) Button -->
+        <div class="nav-resume-group">
+          <a href="assets/Anand_Bhujbal_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-social-btn nav-resume-btn" title="View Updated Resume (PDF)" aria-label="Anand Bhujbal Updated Resume">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </a>
+          <button class="nav-resume-plus-btn" data-modal-target="modal-resume-manager" title="Add / Upload New Resume" aria-label="Add New Resume">+</button>
+        </div>
 
         <!-- CTA Pill -->
         <a href="#contact" class="nav-cta-btn">
@@ -150,16 +153,21 @@
                 </svg>
               </a>
 
-              <a href="assets/Anand_Bhujbal_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" id="hero-resume-btn" title="View & Download Updated Resume (PDF)">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                  <line x1="16" y1="13" x2="8" y2="13"></line>
-                  <line x1="16" y1="17" x2="8" y2="17"></line>
-                  <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-                <span>Updated Resume</span>
-              </a>
+              <div class="resume-btn-group">
+                <a href="assets/Anand_Bhujbal_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-resume-main" id="hero-resume-btn" title="View & Download Updated Resume (PDF)">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  <span>Resume</span>
+                </a>
+                <button class="btn-resume-plus" data-modal-target="modal-resume-manager" title="Add / Upload New Updated Resume">
+                  <span>+</span>
+                </button>
+              </div>
 
               <a href="https://linkedin.com/in/anandbhujbal" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-linkedin" id="hero-linkedin-btn" title="Connect on LinkedIn">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="#0A66C2">
@@ -1123,16 +1131,21 @@
 
             <!-- Download Resume & Share on LinkedIn -->
             <div style="padding-top: 16px; display: flex; flex-direction: column; gap: 12px;">
-              <a href="assets/Anand_Bhujbal_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                  <line x1="16" y1="13" x2="8" y2="13"></line>
-                  <line x1="16" y1="17" x2="8" y2="17"></line>
-                  <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-                <span>View & Download Updated Resume (PDF)</span>
-              </a>
+              <div style="display: flex; gap: 8px;">
+                <a href="assets/Anand_Bhujbal_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="flex: 1;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  <span>View Resume (PDF)</span>
+                </a>
+                <button class="btn btn-secondary" data-modal-target="modal-resume-manager" title="Add / Upload New Resume" style="padding: 0 16px; font-weight: 700; font-size: 1.25rem;">
+                  <span>+</span>
+                </button>
+              </div>
 
               <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://bhujbal-anand.github.io/portfolio/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-linkedin" style="width: 100%;">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="#0A66C2">
@@ -1354,6 +1367,102 @@
         <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 16px;">
           Extracted 24 months of historical financial and booking records, treated seasonal outliers, and tested moving average and linear regression models to project quarterly revenue trajectories. Achieved an 85% back-testing forecast accuracy, equipping leadership with predictive data for resource allocation.
         </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Resume Center & Upload Manager -->
+  <div class="modal-overlay" id="modal-resume-manager" role="dialog" aria-modal="true">
+    <div class="modal-content-card" style="max-width: 720px;">
+      <button class="modal-close-btn" aria-label="Close Modal">✕</button>
+      <div class="modal-body">
+        <span class="project-badge" style="background: rgba(226, 99, 71, 0.15); color: var(--primary);">Resume Hub & Version Manager</span>
+        <h2 style="font-size: 1.8rem; margin: 12px 0;">Anand Bhujbal — Resume Management</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 1rem; line-height: 1.6;">
+          Access current verified resumes or upload a new updated version to preview directly in your portfolio.
+        </p>
+
+        <!-- Current Resume Formats Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 24px;">
+          <!-- Card 1: Comprehensive Resume -->
+          <div style="background: var(--bg-tertiary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                <span style="font-size: 1.3rem;">📄</span>
+                <span class="project-badge" style="font-size: 0.72rem; padding: 2px 8px;">Primary Version</span>
+              </div>
+              <h4 style="font-size: 1.05rem; margin-bottom: 6px;">Master Data Analyst Resume</h4>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
+                Comprehensive PDF featuring real estate analytics, GenAI EDA Studio, and verified metrics.
+              </p>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <a href="assets/Anand_Bhujbal_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="flex: 1; padding: 8px 12px; font-size: 0.82rem; justify-content: center;">
+                <span>View PDF ↗</span>
+              </a>
+              <a href="assets/Anand_Bhujbal_Resume.pdf" download="Anand_Bhujbal_Resume.pdf" class="btn btn-secondary" style="padding: 8px 12px; font-size: 0.82rem;" title="Download PDF">
+                <span>⤓</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 2: ATS Resume -->
+          <div style="background: var(--bg-tertiary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                <span style="font-size: 1.3rem;">🎯</span>
+                <span class="project-badge" style="font-size: 0.72rem; padding: 2px 8px; background: rgba(34, 197, 94, 0.15); color: #22c55e;">1-Page ATS</span>
+              </div>
+              <h4 style="font-size: 1.05rem; margin-bottom: 6px;">ATS-Optimized Format</h4>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
+                Single-page layout optimized for high scoring on Workday, Greenhouse, and Taleo parsers.
+              </p>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <a href="ats_resume.html" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="flex: 1; padding: 8px 12px; font-size: 0.82rem; justify-content: center;">
+                <span>View ATS Web ↗</span>
+              </a>
+              <a href="assets/Anand_Bhujbal_ATS_Resume.pdf" download="Anand_Bhujbal_ATS_Resume.pdf" class="btn btn-secondary" style="padding: 8px 12px; font-size: 0.82rem;" title="Download ATS PDF">
+                <span>⤓</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Add / Upload New Resume -->
+        <h3 style="font-size: 1.15rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+          <span>➕ Add / Preview New Updated Resume</span>
+        </h3>
+
+        <!-- Interactive Drag & Drop Box -->
+        <div class="resume-drop-zone" id="resume-drop-zone">
+          <input type="file" id="resume-file-picker" accept=".pdf" style="display: none;">
+          <div style="font-size: 2.2rem; margin-bottom: 8px;">📤</div>
+          <h4 style="font-size: 1rem; margin-bottom: 6px;">
+            Drag & drop your new resume PDF here, or 
+            <button type="button" id="browse-resume-btn" style="background: none; border: none; color: var(--primary); font-weight: 700; text-decoration: underline; cursor: pointer; font-size: inherit; padding: 0;">browse file</button>
+          </h4>
+          <p style="font-size: 0.82rem; color: var(--text-muted);">Supports .PDF files</p>
+
+          <!-- File Uploaded Feedback Box -->
+          <div id="upload-status-box" style="display: none; margin-top: 14px; padding: 12px; border-radius: var(--radius-sm); background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.3); text-align: left;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+              <div>
+                <strong style="color: #22c55e; font-size: 0.9rem;">✓ New File Loaded:</strong>
+                <div id="uploaded-filename" style="font-size: 0.85rem; color: var(--text-primary); margin-top: 2px;"></div>
+              </div>
+              <a href="#" id="preview-uploaded-link" target="_blank" class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem;">
+                <span>Preview ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Helpful Deployment Tip -->
+        <div style="margin-top: 16px; padding: 12px 16px; border-radius: var(--radius-sm); background: var(--bg-tertiary); border-left: 3px solid var(--primary); font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+          💡 <strong>How to save permanently to your live site:</strong> Save your updated PDF as <code>assets/Anand_Bhujbal_Resume.pdf</code> and push with Git (or send it to Antigravity).
+        </div>
+
       </div>
     </div>
   </div>

@@ -2314,6 +2314,103 @@ img {
   color: var(--primary) !important;
 }
 
+/* Resume button group with + button */
+.resume-btn-group {
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+  vertical-align: middle;
+}
+
+.resume-btn-group .btn-resume-main {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-right: none !important;
+  padding: 14px 20px 14px 24px;
+}
+
+.resume-btn-group .btn-resume-plus {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-top-right-radius: var(--radius-full) !important;
+  border-bottom-right-radius: var(--radius-full) !important;
+  padding: 0 16px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  background: var(--bg-card);
+  color: var(--primary);
+  border: 1px solid var(--border-pill);
+  border-left: 1px solid rgba(226, 99, 71, 0.25);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.resume-btn-group .btn-resume-plus:hover {
+  background: var(--primary);
+  color: #FFFFFF;
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Navbar Resume Group with Plus Button */
+.nav-resume-group {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+
+.nav-resume-plus-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #FFFFFF;
+  border: 2px solid var(--bg-primary);
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  box-shadow: 0 2px 6px rgba(226, 99, 71, 0.4);
+  transition: all var(--transition-fast);
+  padding: 0;
+}
+
+.nav-resume-plus-btn:hover {
+  transform: scale(1.2);
+  background: #ff7a5c;
+}
+
+/* Resume Drop Zone inside modal */
+.resume-drop-zone {
+  border: 2px dashed var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 28px 20px;
+  text-align: center;
+  background: var(--bg-secondary);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.resume-drop-zone:hover,
+.resume-drop-zone.dragover {
+  border-color: var(--primary);
+  background: rgba(226, 99, 71, 0.05);
+}
+
+
 
 
 

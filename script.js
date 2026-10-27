@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initLightbox();
   initContactForm();
+  initResumeManager();
 });
 
 /* =====================================================================
@@ -707,3 +708,88 @@ function showToast(message) {
     toast.classList.remove('show');
   }, 3200);
 }
+
+/* =====================================================================
+   10. RESUME MANAGER & FILE UPLOADER
+   ===================================================================== */
+function initResumeManager() {
+  const dropZone = document.getElementById('resume-drop-zone');
+  const filePicker = document.getElementById('resume-file-picker');
+  const browseBtn = document.getElementById('browse-resume-btn');
+  const statusBox = document.getElementById('upload-status-box');
+  const fileNameDisplay = document.getElementById('uploaded-filename');
+  const previewLink = document.getElementById('preview-uploaded-link');
+
+  if (!dropZone || !filePicker) return;
+
+  if (browseBtn) {
+    browseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      filePicker.click();
+    });
+  }
+
+  dropZone.addEventListener('click', () => {
+    filePicker.click();
+  });
+
+  filePicker.addEventListener('change', (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) handleResumeFile(file);
+  });
+
+  // Drag & Drop
+  ['dragenter', 'dragover'].forEach(eventName => {
+    dropZone.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dropZone.classList.add('dragover');
+    });
+  });
+
+  ['dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dropZone.classList.remove('dragover');
+    });
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    const dt = e.dataTransfer;
+    const file = dt && dt.files && dt.files[0];
+    if (file) handleResumeFile(file);
+  });
+
+  function handleResumeFile(file) {
+    if (!file.name.toLowerCase().endsWith('.pdf')) {
+      showToast('Please select a valid .PDF resume file.');
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+    const sizeKB = Math.round(file.size / 1024);
+
+    if (fileNameDisplay) {
+      fileNameDisplay.textContent = `${file.name} (${sizeKB} KB)`;
+    }
+
+    if (previewLink) {
+      previewLink.setAttribute('href', objectUrl);
+    }
+
+    if (statusBox) {
+      statusBox.style.display = 'block';
+    }
+
+    // Dynamically point page resume links to the newly uploaded file
+    const pageResumeLinks = document.querySelectorAll('a[href*="Anand_Bhujbal_Resume.pdf"], #hero-resume-btn');
+    pageResumeLinks.forEach(link => {
+      link.setAttribute('href', objectUrl);
+      link.setAttribute('title', `Previewing: ${file.name}`);
+    });
+
+    showToast(`Loaded ${file.name}! Resume buttons now preview this file.`);
+  }
+}
+
