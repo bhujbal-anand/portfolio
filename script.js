@@ -759,6 +759,45 @@ function initResumeManager() {
     const objectUrl = URL.createObjectURL(file);
     const sizeKB = Math.round(file.size / 1024);
 
+    // 1. Visually and functionally transform Card 1 ("First Resume") in the modal
+    const masterCard = document.getElementById('card-master-resume');
+    const masterBadge = document.getElementById('card-master-badge');
+    const masterTitle = document.getElementById('card-master-title');
+    const masterDesc = document.getElementById('card-master-desc');
+    const masterViewBtn = document.getElementById('card-master-view-btn');
+    const masterDownloadBtn = document.getElementById('card-master-download-btn');
+
+    if (masterCard) {
+      masterCard.style.borderColor = '#22c55e';
+      masterCard.style.background = 'rgba(34, 197, 94, 0.08)';
+      masterCard.style.boxShadow = '0 0 16px rgba(34, 197, 94, 0.25)';
+    }
+    if (masterBadge) {
+      masterBadge.textContent = '✓ Updated With Selected File';
+      masterBadge.style.background = 'rgba(34, 197, 94, 0.25)';
+      masterBadge.style.color = '#22c55e';
+      masterBadge.style.fontWeight = '700';
+    }
+    if (masterTitle) {
+      masterTitle.textContent = file.name;
+      masterTitle.style.color = '#22c55e';
+    }
+    if (masterDesc) {
+      masterDesc.innerHTML = `<span style="color: var(--text-primary); font-weight: 600;">Active Selected Resume</span> (${sizeKB} KB). Portfolio resume buttons are now updated to this file.`;
+    }
+    if (masterViewBtn) {
+      masterViewBtn.href = objectUrl;
+      masterViewBtn.innerHTML = '<span>View Selected PDF ↗</span>';
+      masterViewBtn.style.background = '#22c55e';
+      masterViewBtn.style.borderColor = '#22c55e';
+    }
+    if (masterDownloadBtn) {
+      masterDownloadBtn.href = objectUrl;
+      masterDownloadBtn.download = file.name;
+      masterDownloadBtn.title = `Download ${file.name}`;
+    }
+
+    // 2. Update status box below
     if (fileNameDisplay) {
       fileNameDisplay.textContent = `${file.name} (${sizeKB} KB)`;
     }
@@ -771,17 +810,16 @@ function initResumeManager() {
       statusBox.style.display = 'block';
     }
 
-    // Dynamically point page resume links to the newly selected file
-    const pageResumeLinks = document.querySelectorAll('a[href*="Anand_Bhujbal_Resume.pdf"], #hero-resume-btn');
+    // 3. Dynamically point page resume links to the newly selected file
+    const pageResumeLinks = document.querySelectorAll(
+      '#hero-resume-btn, .nav-resume-btn, a[href*="Anand_Bhujbal_Resume.pdf"], a[href*="blob:"]'
+    );
     pageResumeLinks.forEach(link => {
       link.setAttribute('href', objectUrl);
       link.setAttribute('title', `Active Selected Resume: ${file.name}`);
     });
 
-    // Directly open selected resume in new tab for immediate preview
-    window.open(objectUrl, '_blank');
-
-    showToast(`✓ Loaded ${file.name}! Opened preview in new tab.`);
+    showToast(`✓ First Resume updated to: ${file.name}!`);
   }
 }
 

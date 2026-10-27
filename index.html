@@ -1384,23 +1384,23 @@
 
         <!-- Current Resume Formats Grid -->
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 24px;">
-          <!-- Card 1: Comprehensive Resume -->
-          <div style="background: var(--bg-tertiary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
+          <!-- Card 1: Comprehensive Resume (First Resume) -->
+          <div id="card-master-resume" style="background: var(--bg-tertiary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease;">
             <div>
               <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                <span style="font-size: 1.3rem;">📄</span>
-                <span class="project-badge" style="font-size: 0.72rem; padding: 2px 8px;">Primary Version</span>
+                <span id="card-master-icon" style="font-size: 1.3rem;">📄</span>
+                <span id="card-master-badge" class="project-badge" style="font-size: 0.72rem; padding: 2px 8px;">Primary Version</span>
               </div>
-              <h4 style="font-size: 1.05rem; margin-bottom: 6px;">Master Data Analyst Resume</h4>
-              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
+              <h4 id="card-master-title" style="font-size: 1.05rem; margin-bottom: 6px;">Master Data Analyst Resume</h4>
+              <p id="card-master-desc" style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
                 Comprehensive PDF featuring real estate analytics, GenAI EDA Studio, and verified metrics.
               </p>
             </div>
             <div style="display: flex; gap: 8px;">
-              <a href="assets/Anand_Bhujbal_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="flex: 1; padding: 8px 12px; font-size: 0.82rem; justify-content: center;">
+              <a href="assets/Anand_Bhujbal_Resume.pdf" id="card-master-view-btn" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="flex: 1; padding: 8px 12px; font-size: 0.82rem; justify-content: center;">
                 <span>View PDF ↗</span>
               </a>
-              <a href="assets/Anand_Bhujbal_Resume.pdf" download="Anand_Bhujbal_Resume.pdf" class="btn btn-secondary" style="padding: 8px 12px; font-size: 0.82rem;" title="Download PDF">
+              <a href="assets/Anand_Bhujbal_Resume.pdf" id="card-master-download-btn" download="Anand_Bhujbal_Resume.pdf" class="btn btn-secondary" style="padding: 8px 12px; font-size: 0.82rem;" title="Download PDF">
                 <span>⤓</span>
               </a>
             </div>
