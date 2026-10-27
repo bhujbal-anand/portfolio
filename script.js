@@ -710,54 +710,152 @@ function showToast(message) {
 }
 
 /* =====================================================================
-   10. RESUME MANAGER & FILE UPLOADER
+   10. RESUME MANAGER & PERSISTENT STORAGE
    ===================================================================== */
+const RESUME_DB_NAME = 'PortfolioResumeDB';
+const RESUME_DB_VERSION = 1;
+const RESUME_STORE_NAME = 'active_resume';
+
+function openResumeDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(RESUME_DB_NAME, RESUME_DB_VERSION);
+    request.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(RESUME_STORE_NAME)) {
+        db.createObjectStore(RESUME_STORE_NAME);
+      }
+    };
+    request.onsuccess = (e) => resolve(e.target.result);
+    request.onerror = (e) => reject(e.target.error);
+  });
+}
+
+async function saveResumeToDB(file) {
+  try {
+    const db = await openResumeDB();
+    const tx = db.transaction(RESUME_STORE_NAME, 'readwrite');
+    const store = tx.objectStore(RESUME_STORE_NAME);
+    const data = {
+      name: file.name,
+      size: file.size,
+      type: file.type || 'application/pdf',
+      blob: file,
+      updatedAt: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    };
+    store.put(data, 'current');
+    return new Promise((res) => {
+      tx.oncomplete = () => res(true);
+      tx.onerror = () => res(false);
+    });
+  } catch (err) {
+    console.error('Failed to save resume in IndexedDB', err);
+    return false;
+  }
+}
+
+async function getSavedResumeFromDB() {
+  try {
+    const db = await openResumeDB();
+    return new Promise((resolve) => {
+      const tx = db.transaction(RESUME_STORE_NAME, 'readonly');
+      const store = tx.objectStore(RESUME_STORE_NAME);
+      const req = store.get('current');
+      req.onsuccess = () => resolve(req.result || null);
+      req.onerror = () => resolve(null);
+    });
+  } catch (err) {
+    return null;
+  }
+}
+
+async function clearSavedResumeFromDB() {
+  try {
+    const db = await openResumeDB();
+    const tx = db.transaction(RESUME_STORE_NAME, 'readwrite');
+    tx.objectStore(RESUME_STORE_NAME).delete('current');
+    return new Promise((res) => {
+      tx.oncomplete = () => res(true);
+      tx.onerror = () => res(false);
+    });
+  } catch (err) {
+    console.error('Failed to clear saved resume', err);
+  }
+}
+
 function initResumeManager() {
   const dropZone = document.getElementById('resume-drop-zone');
   const filePicker = document.getElementById('resume-file-picker');
-  const browseBtn = document.getElementById('browse-resume-btn');
   const statusBox = document.getElementById('upload-status-box');
   const fileNameDisplay = document.getElementById('uploaded-filename');
   const previewLink = document.getElementById('preview-uploaded-link');
+  const resetBtn = document.getElementById('card-master-reset-btn');
 
   if (!filePicker) return;
 
-  filePicker.addEventListener('change', (e) => {
+  // On page load, auto-check if user previously saved a custom resume
+  getSavedResumeFromDB().then(saved => {
+    if (saved && saved.blob) {
+      applyResume(saved.blob, saved.name, saved.size, saved.updatedAt, true);
+    }
+  });
+
+  filePicker.addEventListener('change', async (e) => {
     const file = e.target.files && e.target.files[0];
     if (file) handleResumeFile(file);
   });
 
   // Drag & Drop
-  ['dragenter', 'dragover'].forEach(eventName => {
-    dropZone.addEventListener(eventName, (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      dropZone.classList.add('dragover');
+  if (dropZone) {
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.add('dragover');
+      });
     });
-  });
 
-  ['dragleave', 'drop'].forEach(eventName => {
-    dropZone.addEventListener(eventName, (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      dropZone.classList.remove('dragover');
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove('dragover');
+      });
     });
-  });
 
-  dropZone.addEventListener('drop', (e) => {
-    const dt = e.dataTransfer;
-    const file = dt && dt.files && dt.files[0];
-    if (file) handleResumeFile(file);
-  });
+    dropZone.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const file = dt && dt.files && dt.files[0];
+      if (file) handleResumeFile(file);
+    });
+  }
 
-  function handleResumeFile(file) {
+  // Reset to default button listener
+  if (resetBtn) {
+    resetBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      await clearSavedResumeFromDB();
+      revertToDefaultResume();
+    });
+  }
+
+  async function handleResumeFile(file) {
     if (!file.name.toLowerCase().endsWith('.pdf')) {
       showToast('Please select a valid .PDF resume file.');
       return;
     }
 
-    const objectUrl = URL.createObjectURL(file);
-    const sizeKB = Math.round(file.size / 1024);
+    // Persist into IndexedDB
+    await saveResumeToDB(file);
+
+    const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    applyResume(file, file.name, file.size, dateStr, true);
+
+    showToast(`✓ Resume updated & saved! Active across portfolio.`);
+  }
+
+  function applyResume(blob, name, size, updatedAt, isCustom) {
+    const objectUrl = URL.createObjectURL(blob);
+    const sizeKB = Math.round(size / 1024);
 
     // 1. Visually and functionally transform Card 1 ("First Resume") in the modal
     const masterCard = document.getElementById('card-master-resume');
@@ -768,38 +866,39 @@ function initResumeManager() {
     const masterDownloadBtn = document.getElementById('card-master-download-btn');
 
     if (masterCard) {
-      masterCard.style.borderColor = '#22c55e';
-      masterCard.style.background = 'rgba(34, 197, 94, 0.08)';
-      masterCard.style.boxShadow = '0 0 16px rgba(34, 197, 94, 0.25)';
+      masterCard.style.borderColor = 'var(--primary)';
+      masterCard.style.background = 'rgba(226, 99, 71, 0.08)';
+      masterCard.style.boxShadow = '0 0 16px rgba(226, 99, 71, 0.2)';
     }
     if (masterBadge) {
-      masterBadge.textContent = '✓ Updated With Selected File';
-      masterBadge.style.background = 'rgba(34, 197, 94, 0.25)';
-      masterBadge.style.color = '#22c55e';
+      masterBadge.textContent = '✓ Active Updated Resume';
+      masterBadge.style.background = 'rgba(226, 99, 71, 0.2)';
+      masterBadge.style.color = 'var(--primary)';
       masterBadge.style.fontWeight = '700';
     }
     if (masterTitle) {
-      masterTitle.textContent = file.name;
-      masterTitle.style.color = '#22c55e';
+      masterTitle.textContent = name;
+      masterTitle.style.color = 'var(--text-primary)';
     }
     if (masterDesc) {
-      masterDesc.innerHTML = `<span style="color: var(--text-primary); font-weight: 600;">Active Selected Resume</span> (${sizeKB} KB). Portfolio resume buttons are now updated to this file.`;
+      masterDesc.innerHTML = `<span style="color: var(--primary); font-weight: 600;">Active Portfolio Resume</span> (${sizeKB} KB) • Updated: ${updatedAt}. Active across Hero, Navbar, and Contact buttons.`;
     }
     if (masterViewBtn) {
       masterViewBtn.href = objectUrl;
-      masterViewBtn.innerHTML = '<span>View Selected PDF ↗</span>';
-      masterViewBtn.style.background = '#22c55e';
-      masterViewBtn.style.borderColor = '#22c55e';
+      masterViewBtn.innerHTML = '<span>View Active Resume ↗</span>';
     }
     if (masterDownloadBtn) {
       masterDownloadBtn.href = objectUrl;
-      masterDownloadBtn.download = file.name;
-      masterDownloadBtn.title = `Download ${file.name}`;
+      masterDownloadBtn.download = name;
+      masterDownloadBtn.title = `Download ${name}`;
+    }
+    if (resetBtn) {
+      resetBtn.style.display = isCustom ? 'inline-flex' : 'none';
     }
 
     // 2. Update status box below
     if (fileNameDisplay) {
-      fileNameDisplay.textContent = `${file.name} (${sizeKB} KB)`;
+      fileNameDisplay.textContent = `${name} (${sizeKB} KB) — Saved in browser`;
     }
 
     if (previewLink) {
@@ -810,16 +909,62 @@ function initResumeManager() {
       statusBox.style.display = 'block';
     }
 
-    // 3. Dynamically point page resume links to the newly selected file
+    // 3. Dynamically point page resume links to this active resume
     const pageResumeLinks = document.querySelectorAll(
       '#hero-resume-btn, .nav-resume-btn, a[href*="Anand_Bhujbal_Resume.pdf"], a[href*="blob:"]'
     );
     pageResumeLinks.forEach(link => {
       link.setAttribute('href', objectUrl);
-      link.setAttribute('title', `Active Selected Resume: ${file.name}`);
+      link.setAttribute('title', `Active Resume: ${name}`);
+    });
+  }
+
+  function revertToDefaultResume() {
+    const masterCard = document.getElementById('card-master-resume');
+    const masterBadge = document.getElementById('card-master-badge');
+    const masterTitle = document.getElementById('card-master-title');
+    const masterDesc = document.getElementById('card-master-desc');
+    const masterViewBtn = document.getElementById('card-master-view-btn');
+    const masterDownloadBtn = document.getElementById('card-master-download-btn');
+
+    if (masterCard) {
+      masterCard.style.borderColor = 'var(--border-subtle)';
+      masterCard.style.background = 'var(--bg-tertiary)';
+      masterCard.style.boxShadow = 'none';
+    }
+    if (masterBadge) {
+      masterBadge.textContent = 'Primary Version';
+      masterBadge.style.background = '';
+      masterBadge.style.color = '';
+    }
+    if (masterTitle) {
+      masterTitle.textContent = 'Master Data Analyst Resume';
+      masterTitle.style.color = '';
+    }
+    if (masterDesc) {
+      masterDesc.innerHTML = 'Comprehensive PDF featuring real estate analytics, GenAI EDA Studio, and verified metrics.';
+    }
+    if (masterViewBtn) {
+      masterViewBtn.href = 'assets/Anand_Bhujbal_Resume.pdf';
+      masterViewBtn.innerHTML = '<span>View PDF ↗</span>';
+    }
+    if (masterDownloadBtn) {
+      masterDownloadBtn.href = 'assets/Anand_Bhujbal_Resume.pdf';
+      masterDownloadBtn.download = 'Anand_Bhujbal_Resume.pdf';
+    }
+    if (resetBtn) resetBtn.style.display = 'none';
+    if (statusBox) statusBox.style.display = 'none';
+
+    // Restore page links
+    const pageResumeLinks = document.querySelectorAll(
+      '#hero-resume-btn, .nav-resume-btn, a[href*="blob:"]'
+    );
+    pageResumeLinks.forEach(link => {
+      link.setAttribute('href', 'assets/Anand_Bhujbal_Resume.pdf');
+      link.setAttribute('title', 'View Updated Resume (PDF)');
     });
 
-    showToast(`✓ First Resume updated to: ${file.name}!`);
+    showToast('Restored default portfolio resume.');
   }
 }
 

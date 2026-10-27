@@ -1379,7 +1379,7 @@
         <span class="project-badge" style="background: rgba(226, 99, 71, 0.15); color: var(--primary);">Resume Hub & Version Manager</span>
         <h2 style="font-size: 1.8rem; margin: 12px 0;">Anand Bhujbal — Resume Management</h2>
         <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 1rem; line-height: 1.6;">
-          Access current verified resumes or upload a new updated version to preview directly in your portfolio.
+          Change and update your resume anytime directly from your portfolio. Your selected resume stays saved and active across your entire site.
         </p>
 
         <!-- Current Resume Formats Grid -->
@@ -1396,13 +1396,16 @@
                 Comprehensive PDF featuring real estate analytics, GenAI EDA Studio, and verified metrics.
               </p>
             </div>
-            <div style="display: flex; gap: 8px;">
-              <a href="assets/Anand_Bhujbal_Resume.pdf" id="card-master-view-btn" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="flex: 1; padding: 8px 12px; font-size: 0.82rem; justify-content: center;">
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <a href="assets/Anand_Bhujbal_Resume.pdf" id="card-master-view-btn" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="flex: 1; padding: 8px 12px; font-size: 0.82rem; justify-content: center; min-width: 110px;">
                 <span>View PDF ↗</span>
               </a>
               <a href="assets/Anand_Bhujbal_Resume.pdf" id="card-master-download-btn" download="Anand_Bhujbal_Resume.pdf" class="btn btn-secondary" style="padding: 8px 12px; font-size: 0.82rem;" title="Download PDF">
                 <span>⤓</span>
               </a>
+              <button type="button" id="card-master-reset-btn" class="btn btn-secondary" style="display: none; padding: 8px 12px; font-size: 0.82rem; color: var(--text-muted);" title="Reset to default resume">
+                <span>↺ Reset</span>
+              </button>
             </div>
           </div>
 
