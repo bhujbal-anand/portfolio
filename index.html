@@ -1431,28 +1431,43 @@
 
         <!-- Section: Add / Upload New Resume -->
         <h3 style="font-size: 1.15rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-          <span>➕ Add / Preview New Updated Resume</span>
+          <span>➕ Add / Select Updated Resume</span>
         </h3>
 
-        <!-- Interactive Drag & Drop Box -->
-        <div class="resume-drop-zone" id="resume-drop-zone">
-          <input type="file" id="resume-file-picker" accept=".pdf" style="display: none;">
-          <div style="font-size: 2.2rem; margin-bottom: 8px;">📤</div>
-          <h4 style="font-size: 1rem; margin-bottom: 6px;">
-            Drag & drop your new resume PDF here, or 
-            <button type="button" id="browse-resume-btn" style="background: none; border: none; color: var(--primary); font-weight: 700; text-decoration: underline; cursor: pointer; font-size: inherit; padding: 0;">browse file</button>
-          </h4>
-          <p style="font-size: 0.82rem; color: var(--text-muted);">Supports .PDF files</p>
+        <!-- Native hidden file input linked with label for direct file picker dialog -->
+        <input type="file" id="resume-file-picker" accept=".pdf,application/pdf" style="position: absolute; opacity: 0; width: 0.1px; height: 0.1px; pointer-events: none; z-index: -1;">
 
-          <!-- File Uploaded Feedback Box -->
-          <div id="upload-status-box" style="display: none; margin-top: 14px; padding: 12px; border-radius: var(--radius-sm); background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.3); text-align: left;">
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-              <div>
-                <strong style="color: #22c55e; font-size: 0.9rem;">✓ New File Loaded:</strong>
-                <div id="uploaded-filename" style="font-size: 0.85rem; color: var(--text-primary); margin-top: 2px;"></div>
+        <!-- Drop & Click Zone (Native <label for="resume-file-picker"> directly triggers file explorer) -->
+        <label for="resume-file-picker" class="resume-drop-zone" id="resume-drop-zone" title="Click to browse and select your resume PDF directly">
+          <div style="font-size: 2.2rem; margin-bottom: 8px;">📤</div>
+          <h4 style="font-size: 1.05rem; margin-bottom: 8px; color: var(--text-primary); pointer-events: none;">
+            Drag & drop your new resume PDF here, or
+          </h4>
+          <div style="display: inline-flex; align-items: center; gap: 8px; pointer-events: none; padding: 10px 22px; font-size: 0.95rem; font-weight: 700; color: #FFFFFF; background: var(--primary); border-radius: var(--radius-full); box-shadow: 0 4px 12px rgba(226, 99, 71, 0.35); margin-bottom: 8px; transition: transform 0.2s ease;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <span>Browse File Directly</span>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0; pointer-events: none;">Clicking directly opens your file explorer (supports .PDF)</p>
+        </label>
+
+        <!-- File Uploaded Feedback Box (outside label) -->
+        <div id="upload-status-box" style="display: none; margin-top: 14px; padding: 14px 16px; border-radius: var(--radius-md); background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.35); text-align: left;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="color: #22c55e; font-size: 1.1rem; font-weight: bold;">✓</span>
+                <strong style="color: #22c55e; font-size: 0.95rem;">Resume Selected & Active:</strong>
               </div>
-              <a href="#" id="preview-uploaded-link" target="_blank" class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem;">
-                <span>Preview ↗</span>
+              <div id="uploaded-filename" style="font-size: 0.88rem; color: var(--text-primary); margin-top: 4px; font-weight: 600;"></div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Portfolio resume buttons now point directly to this file.</div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <a href="#" id="preview-uploaded-link" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">
+                <span>View Selected Resume ↗</span>
               </a>
             </div>
           </div>

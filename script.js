@@ -720,18 +720,7 @@ function initResumeManager() {
   const fileNameDisplay = document.getElementById('uploaded-filename');
   const previewLink = document.getElementById('preview-uploaded-link');
 
-  if (!dropZone || !filePicker) return;
-
-  if (browseBtn) {
-    browseBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      filePicker.click();
-    });
-  }
-
-  dropZone.addEventListener('click', () => {
-    filePicker.click();
-  });
+  if (!filePicker) return;
 
   filePicker.addEventListener('change', (e) => {
     const file = e.target.files && e.target.files[0];
@@ -782,14 +771,17 @@ function initResumeManager() {
       statusBox.style.display = 'block';
     }
 
-    // Dynamically point page resume links to the newly uploaded file
+    // Dynamically point page resume links to the newly selected file
     const pageResumeLinks = document.querySelectorAll('a[href*="Anand_Bhujbal_Resume.pdf"], #hero-resume-btn');
     pageResumeLinks.forEach(link => {
       link.setAttribute('href', objectUrl);
-      link.setAttribute('title', `Previewing: ${file.name}`);
+      link.setAttribute('title', `Active Selected Resume: ${file.name}`);
     });
 
-    showToast(`Loaded ${file.name}! Resume buttons now preview this file.`);
+    // Directly open selected resume in new tab for immediate preview
+    window.open(objectUrl, '_blank');
+
+    showToast(`✓ Loaded ${file.name}! Opened preview in new tab.`);
   }
 }
 

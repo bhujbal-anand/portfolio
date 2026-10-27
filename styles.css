@@ -2395,6 +2395,7 @@ img {
 
 /* Resume Drop Zone inside modal */
 .resume-drop-zone {
+  display: block;
   border: 2px dashed var(--border-card);
   border-radius: var(--radius-md);
   padding: 28px 20px;
@@ -2402,12 +2403,15 @@ img {
   background: var(--bg-secondary);
   transition: all var(--transition-fast);
   cursor: pointer;
+  user-select: none;
 }
 
 .resume-drop-zone:hover,
 .resume-drop-zone.dragover {
   border-color: var(--primary);
-  background: rgba(226, 99, 71, 0.05);
+  background: rgba(226, 99, 71, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 
