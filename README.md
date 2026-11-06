@@ -34,13 +34,20 @@ Portfolio/
 ├── assets/
 │   ├── anand-photo.jpg                 # Portrait photo
 │   ├── Anand_Bhujbal_Resume.pdf        # Verified PDF resume for download
-│   └── dashboards/
-│       ├── genai-data-analyst.png      # GenAI Automated Data Analyst & EDA Studio
-│       ├── sales-overview.png          # Real Estate Sales Overview
-│       ├── city-payment-analysis.png   # City & Payment Analysis (₹28B)
-│       ├── buyer-analysis.png          # Buyer & Loan Distribution
-│       └── urbanmart-dashboard.jpg     # UrbanMart Retail Intelligence
+│   ├── dashboards/
+│   │   ├── customer-shopping-behavior.png # Customer Shopping Behavior & Segmentation Dashboard
+│   │   ├── genai-data-analyst.png      # GenAI Automated Data Analyst & EDA Studio
+│   │   ├── sales-overview.png          # Real Estate Sales Overview
+│   │   ├── city-payment-analysis.png   # City & Payment Analysis (₹28B)
+│   │   ├── buyer-analysis.png          # Buyer & Loan Distribution
+│   │   └── urbanmart-dashboard.jpg     # UrbanMart Retail Intelligence
+│   └── customer-shopping-behavior/     # Project analysis screenshots & artifacts
+├── dashboard/
+│   └── Customer_behavior.pbix          # Customer Shopping Behavior Power BI File
+├── notebooks/
+│   └── Customer_Shoping_Behaviour.ipynb # Python EDA & Feature Engineering Notebook
 ├── Sql Scripts/
+│   ├── Customer_Shopping_behavior.sql  # 10 Strategic Business Queries, CTEs & Window Functions
 │   ├── Database_Tables_.sql            # Schema creation & table definitions
 │   ├── business_insight_query.sql      # CTEs, Window functions & Business queries
 │   └── exploratory_Analysis_Real_estate.sql # EDA & data quality checks

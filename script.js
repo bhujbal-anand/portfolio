@@ -444,6 +444,97 @@ SELECT
 FROM property_bookings
 GROUP BY transaction_id
 HAVING COUNT(*) > 1;`
+  },
+  {
+    id: 'q-customer-segmentation',
+    category: 'advanced',
+    tag: 'CTE & CASE: Lifecycle Tiers',
+    title: 'Customer Lifecycle Segmentation: Loyal, Returning & New (CTE)',
+    description: 'Classifies 3,900 shoppers into Loyal (>10 purchases), Returning (2-10 purchases), and New (1 purchase) tiers to quantify brand retention.',
+    code: `-- Customer Shopping Behavior: Lifecycle Cohort Segmentation
+-- Classify 3,900 customers into New, Returning, and Loyal tiers
+WITH customer_type AS (
+    SELECT 
+        customer_id,
+        previous_purchases,
+        CASE
+            WHEN previous_purchases = 1 THEN 'New'
+            WHEN previous_purchases BETWEEN 2 AND 10 THEN 'Returning'
+            ELSE 'Loyal'
+        END AS customer_segment
+    FROM customer
+)
+SELECT 
+    customer_segment, 
+    COUNT(*) AS Number_of_customers
+FROM customer_type
+GROUP BY customer_segment
+ORDER BY Number_of_customers DESC;`
+  },
+  {
+    id: 'q-top-products-per-category',
+    category: 'advanced',
+    tag: 'Window Function: ROW_NUMBER()',
+    title: 'Top 3 Best-Selling Products per Category (ROW_NUMBER)',
+    description: 'Ranks and extracts the top 3 revenue-generating items within Accessories, Clothing, Footwear, and Outerwear using partitioned window ranking.',
+    code: `-- Customer Shopping Behavior: Category SKU Leaderboards
+-- Identify the top 3 most purchased items within each product category
+WITH items_count AS (
+    SELECT  
+        category,
+        item_purchased,
+        COUNT(customer_id) AS total_customer,
+        ROW_NUMBER() OVER(
+            PARTITION BY category 
+            ORDER BY COUNT(customer_id) DESC
+        ) AS category_rank
+    FROM customer
+    GROUP BY category, item_purchased
+)
+SELECT 
+    category,
+    item_purchased,
+    category_rank
+FROM items_count
+WHERE category_rank <= 3;`
+  },
+  {
+    id: 'q-discount-dependency',
+    category: 'business',
+    tag: 'Promotional Elasticity & Margin Risk',
+    title: 'Top 5 Discount-Dependent Products (Conditional Aggregation)',
+    description: 'Calculates the percentage of purchases made with promotional discounts applied per SKU to audit price sensitivity and margin leakage risk.',
+    code: `-- Customer Shopping Behavior: Discount Sensitivity Analysis
+-- Identify top 5 products with the highest percentage of discounted purchases
+SELECT 
+    item_purchased,
+    ROUND(100.0 * SUM(CASE
+        WHEN discount_applied = 'Yes' THEN 1
+        ELSE 0
+    END) / COUNT(*), 2) AS discount_rate
+FROM customer
+GROUP BY item_purchased
+ORDER BY discount_rate DESC
+LIMIT 5;`
+  },
+  {
+    id: 'q-repeat-buyers-subscription',
+    category: 'business',
+    tag: 'Subscription Economics & Retention',
+    title: 'Repeat Buyers vs. Subscription Conversion Gap',
+    description: 'Analyzes subscription adoption among repeat customers (>5 previous purchases) revealing a 2.6x conversion opportunity.',
+    code: `-- Customer Shopping Behavior: Repeat Buyers & Subscription Gap
+-- Compare subscription conversion among frequent repeat buyers (>5 purchases)
+-- Discovered 2,518 repeat non-subscribers vs 958 subscribers (2.6x conversion pipeline)
+SELECT 
+    subscription_status,
+    COUNT(customer_id) AS repeated_customers,
+    ROUND(AVG(purchase_amount), 2) AS avg_purchase_amount,
+    SUM(purchase_amount) AS total_revenue
+FROM customer
+WHERE previous_purchases > 5
+GROUP BY subscription_status
+ORDER BY repeated_customers DESC;`
   }
 ];
 
